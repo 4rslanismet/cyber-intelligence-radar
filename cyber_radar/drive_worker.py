@@ -101,7 +101,7 @@ def _local_md5_if_affordable(local_path: str, size: int) -> str | None:
     Boyut+trashed karşılaştırması zaten yapılıyor; bu SADECE ek bir katman."""
     if size > config.GDRIVE_VERIFY_MD5_MAX_MB * 1024 * 1024:
         return None
-    h = hashlib.md5()  # noqa: S324 - bütünlük kontrolü, kriptografik amaç değil (Drive API'nin kendi alanı)
+    h = hashlib.md5(usedforsecurity=False)  # matches Google Drive API's own md5Checksum field - integrity check, not cryptographic use
     with open(local_path, "rb") as f:
         for chunk in iter(lambda: f.read(1024 * 1024), b""):
             h.update(chunk)

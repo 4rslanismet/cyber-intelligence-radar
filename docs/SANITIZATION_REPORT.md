@@ -103,6 +103,52 @@ via `tools/fresh_environment_check.sh` — see
   `public_test_pw`) — recognized as safe placeholders by the
   URL-credential check's marker list.
 
+## Static security scan (bandit) — reviewed findings
+
+`bandit -r cyber_radar` was run as part of the pre-publish gate (this is
+a static-analysis tool, distinct from the sanitization scanner above,
+and checks for insecure *code patterns* rather than leaked data). One
+real, trivially-fixable finding was fixed: `hashlib.md5()` in
+`drive_worker.py` now passes `usedforsecurity=False` (it computes a
+Drive-API-compatible content checksum for integrity comparison, not a
+cryptographic hash — Google Drive's own `md5Checksum` file field forces
+MD5 specifically, so the algorithm itself can't change).
+
+All other findings were reviewed and are not vulnerabilities in this
+codebase's actual usage, so they were left as-is rather than changed
+for the sake of a clean scan:
+
+- **B608 (SQL built with an f-string), 9 occurrences** in
+  `run_pipeline.py` and `telegram_listener.py`: every interpolated
+  identifier (`table`, `field`, `shown_col`, the comparison `op`) is
+  drawn from a small, hardcoded, closed set of literal strings in the
+  code itself (e.g. `table = "papers" if prefix == "p" else
+  "news_events"`) — never from raw user/Telegram/HTTP input. All actual
+  *values* are passed as separate, properly parameterized query
+  arguments. Bandit's B608 rule flags any f-string used to build a SQL
+  string regardless of what's interpolated; it cannot distinguish
+  "a value from a 2-element hardcoded list" from "raw external input."
+- **B314/B405 (`xml.etree.ElementTree` for arXiv API responses)**:
+  arXiv's Atom API is fetched over HTTPS; ElementTree's classic
+  XXE/entity-expansion risks apply to untrusted XML from an
+  unauthenticated/arbitrary source, which this is not. Still a
+  reasonable future hardening item — noted in `docs/KNOWN_LIMITATIONS.md`
+  as a candidate for switching to `defusedxml` — not done in this pass
+  to avoid adding a new dependency without a separate explicit decision.
+- **B603/B607 (subprocess call, partial executable path), 2 occurrences**
+  in `db_backup.py` (`pg_dump`) and `notify_failure.py` (`journalctl`):
+  both call `subprocess.run` with a literal argument list (never
+  `shell=True`, never string-interpolated from external input).
+- **B110 (bare `except: pass`), 2 occurrences**: both are intentional
+  best-effort paths (a failure-notification's own log tail, and an
+  optional DOAJ cross-check) already annotated in-line with why swallowing
+  the exception is correct there.
+- **B311 (non-cryptographic `random.uniform`)**: retry-jitter timing, not
+  security-sensitive.
+- **B105 (`hardcoded_password_string`)**: a false positive — the
+  matched string is an OAuth token *endpoint URL*
+  (`https://oauth2.googleapis.com/token`), not a credential.
+
 ## Remaining risks (disclosed, not hidden)
 
 - **The scanner is a heuristic, not a formal proof.** It catches the

@@ -45,12 +45,6 @@ Gemini API; there's no built-in local-model fallback in this release.
 See [DEPLOYMENT.md](DEPLOYMENT.md) — evaluated and deliberately
 postponed rather than shipping an unverified Dockerfile.
 
-## License not finalized
-
-See `docs/PUBLIC_RELEASE_ACCEPTANCE.md` — the top-level `LICENSE` file
-is a placeholder pending an explicit decision; do not treat this
-repository as licensed for reuse until that's resolved.
-
 ## XML parsing not hardened with `defusedxml`
 
 Assessed as low-risk on modern Python (which disables external entity
