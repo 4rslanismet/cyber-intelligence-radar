@@ -1,0 +1,24 @@
+LICENSE - NOT YET FINALIZED
+============================
+
+This repository does not yet have a finalized open-source license.
+
+No license decision was found in the private repository this project
+was exported from, and per this export's own instructions, a license
+choice is not something to be decided unilaterally as part of an
+automated export process.
+
+Until this file is replaced with an actual license text:
+
+  - Do NOT treat this repository as available for reuse, redistribution,
+    or modification under any implied license.
+  - All rights are reserved by the copyright holder by default.
+
+See docs/PUBLIC_RELEASE_ACCEPTANCE.md for the status of this decision
+and what needs to happen before this repository is actually published.
+
+Recommended next step for the maintainer: choose a license appropriate
+for an open-source security research tool (common choices for this kind
+of project include MIT, Apache-2.0, or GPL-3.0-or-later depending on
+your goals for downstream use/attribution/copyleft) and replace this
+file with its full text before making this repository public.
