@@ -29,8 +29,15 @@ def test_scanner_actually_detects_injected_private_marker(tmp_path):
 
 
 def test_scanner_detects_injected_secret_pattern(tmp_path):
+    """Assembled from fragments at runtime (not one contiguous literal) so
+    this test file's own git blob never contains a string that itself
+    matches a real secret-scanner pattern (gitleaks/GitHub push
+    protection) - the injected value below is fake and never a live key
+    either way, but a contiguous literal would still trip external
+    scanners on this file at rest."""
+    fake_key = "AIza" + "SyDaGmWKa4JsXZ" + "-HjGw7ISLn_3namBGewQe"
     bad_file = tmp_path / "leaked_key.py"
-    bad_file.write_text('GEMINI_API_KEY = "AIza"+"SyDaGmWKa4JsXZ"+"-HjGw7ISLn_3namBGewQe"\n')
+    bad_file.write_text(f'GEMINI_API_KEY = "{fake_key}"\n')
     issues = find_all_issues(root=str(tmp_path))
     assert any("Google API key" in i for i in issues)
 

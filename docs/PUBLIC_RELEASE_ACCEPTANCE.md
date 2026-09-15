@@ -8,8 +8,8 @@ an assertion.
 
 ## 1-2. Do not touch the private repo / separate export tree
 
-**PASS.** This repository (`/home/v4gus/cyber-intelligence-radar-public`)
-is a separate `git init`, no shared history with the private repository.
+**PASS.** This repository is a separate `git init` in its own directory,
+no shared history with the private repository.
 The private repo's own HEAD (`5853c2b`) was not modified by this phase
 beyond the planning doc committed at the *start* of the phase
 (`docs/PUBLIC_EXPORT_PLAN.md`); `git status` on the private repo is clean
@@ -38,7 +38,7 @@ copy or in-place transformation of the private tree.
 
 ## 6. New directory, standalone-public-repo-shaped
 
-**PASS.** `/home/v4gus/cyber-intelligence-radar-public`, package name
+**PASS.** Standalone directory tree, package name
 `cyber_intelligence_radar` (`pyproject.toml`), importable module
 `cyber_radar`, console script `cyber-radar`.
 
@@ -194,12 +194,12 @@ cache/reuse, and health checks.
 
 ## License decision
 
-**PARTIAL / explicit placeholder, as instructed.** The private repository
-has no prior explicit license decision. Per the instruction not to
-silently invent a legal strategy, `LICENSE` in this repo is a clearly
-marked "NOT YET FINALIZED" placeholder pending an explicit choice by the
-repository owner before any public release. This is a deliberate,
-disclosed gap, not an oversight.
+**PASS.** The private repository had no prior explicit license decision,
+so the placeholder in this document's earlier draft was deliberate, not
+an oversight. The repository owner has since explicitly chosen
+**Apache License 2.0**. `LICENSE` now contains the full Apache-2.0 text
+with a 2026 copyright notice; `pyproject.toml`'s `license` field and
+README's License section were updated to match.
 
 ## Versioning
 
@@ -398,11 +398,9 @@ private code paths.
 
 **PUBLIC_RELEASE_ACCEPTANCE = PASS**
 
-The one disclosed, deliberate non-blocking gap is the LICENSE
-placeholder (an explicit legal decision that was never made in the
-private repository and that this phase was instructed not to invent).
-Everything else required for the public-export acceptance gate is
-satisfied with verifiable evidence above.
+The LICENSE decision (Apache-2.0) has since been made explicitly by the
+repository owner and applied. No non-blocking gaps remain from the
+original export acceptance.
 
 Per the explicit gate in the specification: **no public GitHub repository
 has been created or pushed to.** This document, the sanitization report,

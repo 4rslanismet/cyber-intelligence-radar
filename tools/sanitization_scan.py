@@ -45,11 +45,13 @@ EXCLUDED_FILENAMES = {".env", ".env.bak"}  # matched by basename, wherever they 
 # strings for detecting leakage.
 PRIVATE_IDENTIFIER_DENYLIST = [
     "v4gus",
-    "4rslanismet",
     "aiozet",
     "SHGM",
     "cyber-radar-public",  # working name used only during this export process
 ]
+# Note: the repository owner's GitHub handle is deliberately NOT on this
+# denylist - it is the intended public copyright holder/owner of this
+# repository (see LICENSE) and its presence there is expected, not a leak.
 
 # Generic secret-shaped patterns - each is (label, compiled regex).
 SECRET_PATTERNS: list[tuple[str, re.Pattern]] = [

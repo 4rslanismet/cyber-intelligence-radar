@@ -89,10 +89,10 @@ via `tools/fresh_environment_check.sh` — see
 
 ## Known false positives resolved during this pass
 
-- `tests/test_security_ssrf_guard.py`'s illustrative private-IP test
-  fixtures (`10.0.0.5`, `192.168.1.1`) — legitimate SSRF-guard test
-  data, not a leaked address. The IP heuristic is scoped to exclude
-  `tests/`.
+- `tests/test_security_ssrf_guard.py`'s illustrative RFC1918-range test
+  fixtures (used to exercise the SSRF guard's blocklist logic) —
+  legitimate test data, not a leaked address. The IP heuristic is
+  scoped to exclude `tests/`.
 - The scanner's own source, and `tools/fresh_environment_check.sh`'s own
   private-path grep pattern, necessarily *mention* the identifiers
   they're built to detect — both are explicitly excluded from
