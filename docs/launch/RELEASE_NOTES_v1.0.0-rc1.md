@@ -1,8 +1,9 @@
-# Release Notes — v1.0.0-rc1 (Draft, NOT published)
+# Release Notes — v1.0.0-rc1 (Published)
 
-*Drafted for `gh release create v1.0.0-rc1 --notes-file ...` or pasting
-directly into the GitHub Release UI. The tag/release has deliberately
-not been created — see `docs/launch/LAUNCH_CHECKLIST.md`.*
+*This is the source draft. The actually-published release body used
+root-relative links (no `../`) since GitHub Release pages resolve
+relative links against the repo root, not this file's directory. See
+the live release: https://github.com/4rslanismet/cyber-intelligence-radar/releases/tag/v1.0.0-rc1*
 
 ---
 

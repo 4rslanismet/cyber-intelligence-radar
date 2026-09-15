@@ -1,8 +1,7 @@
 # Launch Checklist
 
-Tracks readiness for the visibility-first public launch. Publishing
-actions (marked below) require explicit maintainer approval and have
-**not** been done — see "Publication gate" at the bottom.
+Tracks readiness for the visibility-first public launch.
+**v1.0.0-rc1 is LIVE** — https://github.com/4rslanismet/cyber-intelligence-radar/releases/tag/v1.0.0-rc1
 
 ## Repository & code
 
@@ -40,29 +39,41 @@ actions (marked below) require explicit maintainer approval and have
 - [x] `docs/launch/LINKEDIN_EN.md` / `LINKEDIN_TR.md`
 - [x] `docs/launch/SHORT_POST_EN.md` / `SHORT_POST_TR.md`
 - [x] `docs/launch/YOUTUBE.md`
-- [x] `docs/launch/RELEASE_NOTES_v1.0.0-rc1.md` — drafted, tag/release NOT created
+- [x] `docs/launch/RELEASE_NOTES_v1.0.0-rc1.md` — used as the published
+      release body (root-relative links corrected for the Release page)
+- [x] `docs/launch/LINKEDIN_EN.md` / `LINKEDIN_TR.md` — finalized with
+      the live release URL as primary CTA
 
 ## Manual steps (cannot be done from this environment)
 
 - [x] GitHub social preview **asset created**
       (`docs/assets/github-social-preview.png`, 1280×640)
-- [ ] GitHub social preview **upload** (web UI only — Settings → General
-      → Social preview — see `docs/assets/README.md`)
-- [ ] Recording and uploading the actual demo video
-- [ ] Actually posting any of the drafted social content
+- [x] GitHub social preview **uploaded** (done by the maintainer via
+      Settings → General → Social preview)
+- [ ] Recording and uploading the actual demo video (explicitly NOT a
+      release blocker — see `docs/DEMO.md` / `docs/launch/YOUTUBE.md`)
+- [ ] Actually posting the LinkedIn copy (maintainer posts manually —
+      no auto-posting)
 
 ## Publication gate
 
-The following are **deliberately not done** pending explicit
-maintainer approval, per this launch's own instructions:
+- [x] GitHub Release published / `v1.0.0-rc1` tag pushed — **LIVE**
+- [ ] LinkedIn post published (copy is final and ready; posting is a
+      manual maintainer action)
+- [ ] YouTube video uploaded (not a blocker; recorded later)
+- [ ] Short social posts published (drafts ready in
+      `docs/launch/SHORT_POST_EN.md` / `SHORT_POST_TR.md`)
 
-- [ ] GitHub Release published / `v1.0.0-rc1` tag pushed
-- [ ] LinkedIn post published
-- [ ] YouTube video uploaded
-- [ ] Any social post published
+**Status: RELEASE — LIVE. Remaining social publication — maintainer's
+own action, whenever they choose.**
 
-**Status: SOCIAL/RELEASE PUBLICATION — AWAITING USER APPROVAL.**
+## Post-release phase
 
-Progress: **17/19** checklist items complete (the 2 open items are the
-manual-only steps above; the 4 publication-gate items are intentionally
-held, not counted as blockers).
+Per explicit instruction: no new feature development starts right after
+`v1.0.0-rc1`. Next phase is observation only — GitHub traffic, stars,
+issues, clone/setup feedback, bug reports, feature requests — with new
+feature work evaluated only against real feedback, not spec-driven.
+
+Progress: **19/19** checklist items where "done" was ever required for
+release; the remaining 2 open boxes (video recording, actual social
+posting) are the maintainer's own future actions, not blockers.
