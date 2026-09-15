@@ -1,0 +1,41 @@
+[Unit]
+Description=Cyber Intelligence Radar - collection + analysis + digest
+After=network-online.target postgresql.service
+Wants=network-online.target
+# Runs a separate unit on failure to send a Telegram alert (if configured) -
+# deliberately separate so a crashed process doesn't have to notify itself.
+OnFailure=cyber-radar-failure-notify.service
+
+[Service]
+Type=oneshot
+# Use a dedicated, restricted system user - do not run this as root or as
+# your own login user.
+User=cyber-radar
+Group=cyber-radar
+WorkingDirectory=/opt/cyber-intelligence-radar
+# Adjust to your venv's python:
+ExecStart=/opt/cyber-intelligence-radar/.venv/bin/python3 -m cyber_radar.run_pipeline
+# .env in WorkingDirectory is read automatically via python-dotenv.
+TimeoutStartSec=1800
+StandardOutput=journal
+StandardError=journal
+# Adjust to your host's actual available RAM - a single run (PDF download +
+# text extraction + parallel collection) should never be allowed to consume
+# all of it.
+MemoryHigh=3584M
+MemoryMax=4G
+
+# Hardening baseline. ProtectSystem/ProtectHome/ReadWritePaths are
+# deliberately NOT set here - audit your own WorkingDirectory/data
+# write paths before adding them, or they can silently break the service.
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target

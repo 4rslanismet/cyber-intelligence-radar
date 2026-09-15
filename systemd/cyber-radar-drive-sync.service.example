@@ -1,0 +1,27 @@
+[Unit]
+Description=Cyber Intelligence Radar - Drive Queue worker (only needed if GDRIVE_SYNC_MODE=queued)
+After=network-online.target postgresql.service
+Wants=network-online.target
+OnFailure=cyber-radar-failure-notify.service
+
+[Service]
+Type=oneshot
+User=cyber-radar
+Group=cyber-radar
+WorkingDirectory=/opt/cyber-intelligence-radar
+ExecStart=/opt/cyber-intelligence-radar/.venv/bin/cyber-radar drive run
+# The worker self-stops after GDRIVE_WORKER_MAX_RUNTIME_MINUTES (default
+# 60) - keep this larger so systemd never cuts it off before its own
+# normal exit.
+TimeoutStartSec=3900
+StandardOutput=journal
+StandardError=journal
+
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true

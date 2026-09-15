@@ -1,0 +1,24 @@
+[Unit]
+Description=Cyber Intelligence Radar - failed-run notification (Telegram)
+# DefaultDependencies=no avoids a systemd transaction conflict when this
+# unit is triggered by OnFailure= during a shutdown/reboot (every unit
+# implicitly conflicts with shutdown.target otherwise, which can cause
+# systemd to refuse the OnFailure= transaction and silently drop the
+# notification).
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+User=cyber-radar
+Group=cyber-radar
+WorkingDirectory=/opt/cyber-intelligence-radar
+ExecStart=/opt/cyber-intelligence-radar/.venv/bin/python3 -m cyber_radar.notify_failure
+
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true

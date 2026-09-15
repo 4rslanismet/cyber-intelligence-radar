@@ -1,0 +1,11 @@
+[Unit]
+Description=Cyber Intelligence Radar - twice-daily run (adjust to your GEMINI_RUNS_PER_DAY)
+
+[Timer]
+OnCalendar=*-*-* 07:30:00
+OnCalendar=*-*-* 19:30:00
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target
