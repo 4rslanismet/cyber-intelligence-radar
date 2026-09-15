@@ -12,6 +12,15 @@ inside a ` ```mermaid ` fence.
 | `material_update_flow.mmd` | [README.md](../../README.md), [COMPARISON.md](../COMPARISON.md) | The CVE-2026-DEMO material-update example |
 | `pipeline_comparison.mmd` | [README.md](../../README.md) | RSS reader vs. AI digest bot vs. this project |
 
+## GitHub social preview
+
+`github-social-preview.png` (1280×640, rendered from `github-social-preview.svg`
+via `rsvg-convert`) — title, tagline, and a minimal six-stage pipeline
+motif (Sources → Normalize → Deduplicate → Material Change → Relevance →
+Brief) on a dark, technical background. No personal data, hostnames,
+IPs, tokens, or paths. Uploading it is still a manual step (see below) —
+GitHub has no API for this.
+
 ## "Setup example" and "doctor example" assets
 
 These are represented as real terminal output (copy-pasteable code
@@ -33,11 +42,9 @@ the GitHub web UI and cannot be done from this environment:
 - **GitHub social preview image** (Settings → General → Social preview,
   on the repository's GitHub page) — GitHub does not expose an API for
   uploading this image; it's a web-UI-only upload.
-  **MANUAL STEP REQUIRED.** Suggested content: repository name
-  "Cyber Intelligence Radar", the tagline "Track what matters. Resurface
-  only what changed.", and an architecture-motif background — a
-  1280×640px PNG built from `architecture.mmd`'s shape (e.g. rendered via
-  the Mermaid CLI or the Mermaid Live Editor) would fit well.
+  **MANUAL STEP REQUIRED.** The asset itself is ready:
+  `github-social-preview.png` (see above) — upload that file at
+  Settings → General → Social preview.
 - **A rendered PNG/SVG export of the Mermaid diagrams**, for contexts
   that don't render Mermaid (some external link previews, non-GitHub
   viewers). Optional — the diagrams already render correctly on GitHub

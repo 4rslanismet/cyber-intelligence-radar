@@ -44,8 +44,10 @@ actions (marked below) require explicit maintainer approval and have
 
 ## Manual steps (cannot be done from this environment)
 
-- [ ] GitHub social preview image upload (web UI only — see
-      `docs/assets/README.md`)
+- [x] GitHub social preview **asset created**
+      (`docs/assets/github-social-preview.png`, 1280×640)
+- [ ] GitHub social preview **upload** (web UI only — Settings → General
+      → Social preview — see `docs/assets/README.md`)
 - [ ] Recording and uploading the actual demo video
 - [ ] Actually posting any of the drafted social content
 

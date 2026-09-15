@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <defs>
+    <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="640" fill="#0d1117"/>
+
+  <!-- Decorative radar rings, top-right, subtle -->
+  <g transform="translate(1080,160)">
+    <circle r="180" fill="url(#radarGlow)"/>
+    <circle r="150" fill="none" stroke="#30363d" stroke-width="1.5"/>
+    <circle r="105" fill="none" stroke="#30363d" stroke-width="1.5"/>
+    <circle r="60" fill="none" stroke="#30363d" stroke-width="1.5"/>
+    <circle r="18" fill="none" stroke="#2dd4bf" stroke-width="2"/>
+    <line x1="0" y1="0" x2="150" y2="-70" stroke="#2dd4bf" stroke-width="2" stroke-opacity="0.7"/>
+    <circle cx="98" cy="-52" r="5" fill="#2dd4bf"/>
+    <circle cx="-70" cy="90" r="4" fill="#2dd4bf" fill-opacity="0.55"/>
+  </g>
+
+  <!-- Top accent rule -->
+  <rect x="80" y="96" width="64" height="4" fill="#2dd4bf"/>
+
+  <!-- Title -->
+  <text x="80" y="196" font-family="DejaVu Sans, sans-serif" font-weight="700" font-size="66" fill="#f0f6fc">Cyber Intelligence Radar</text>
+
+  <!-- Tagline -->
+  <text x="80" y="256" font-family="DejaVu Sans, sans-serif" font-weight="400" font-size="30" fill="#8b949e">Track what matters.</text>
+  <text x="80" y="298" font-family="DejaVu Sans, sans-serif" font-weight="700" font-size="30" fill="#2dd4bf">Resurface only what changed.</text>
+
+  <!-- Pipeline motif -->
+  <g font-family="DejaVu Sans Mono, monospace" font-size="16" fill="#c9d1d9">
+    <!-- box helper positions -->
+    <!-- Sources -->
+    <rect x="80" y="440" width="150" height="56" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+    <text x="155" y="474" text-anchor="middle">Sources</text>
+
+    <path d="M230 468 L262 468" stroke="#30363d" stroke-width="2"/>
+    <path d="M254 461 L262 468 L254 475" fill="none" stroke="#30363d" stroke-width="2"/>
+
+    <!-- Normalize -->
+    <rect x="262" y="440" width="150" height="56" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+    <text x="337" y="474" text-anchor="middle">Normalize</text>
+
+    <path d="M412 468 L444 468" stroke="#30363d" stroke-width="2"/>
+    <path d="M436 461 L444 468 L436 475" fill="none" stroke="#30363d" stroke-width="2"/>
+
+    <!-- Deduplicate -->
+    <rect x="444" y="440" width="164" height="56" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+    <text x="526" y="474" text-anchor="middle">Deduplicate</text>
+
+    <path d="M608 468 L640 468" stroke="#30363d" stroke-width="2"/>
+    <path d="M632 461 L640 468 L632 475" fill="none" stroke="#30363d" stroke-width="2"/>
+
+    <!-- Material Change (accent - the differentiator) -->
+    <rect x="640" y="436" width="196" height="64" rx="8" fill="#122b28" stroke="#2dd4bf" stroke-width="2"/>
+    <text x="738" y="474" text-anchor="middle" fill="#2dd4bf" font-weight="700">Material Change</text>
+
+    <path d="M836 468 L868 468" stroke="#30363d" stroke-width="2"/>
+    <path d="M860 461 L868 468 L860 475" fill="none" stroke="#30363d" stroke-width="2"/>
+
+    <!-- Relevance -->
+    <rect x="868" y="440" width="150" height="56" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+    <text x="943" y="474" text-anchor="middle">Relevance</text>
+
+    <path d="M1018 468 L1050 468" stroke="#30363d" stroke-width="2"/>
+    <path d="M1042 461 L1050 468 L1042 475" fill="none" stroke="#30363d" stroke-width="2"/>
+
+    <!-- Brief -->
+    <rect x="1050" y="440" width="120" height="56" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+    <text x="1110" y="474" text-anchor="middle">Brief</text>
+  </g>
+
+  <!-- Footer label -->
+  <text x="80" y="570" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#6e7681">Self-hosted · Open source · Apache-2.0</text>
+</svg>
