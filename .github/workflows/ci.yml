@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: cyber_radar
+          POSTGRES_PASSWORD: ci_test_password
+          POSTGRES_DB: cyber_radar_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      # Test-only database - never a real secret. No LLM/Telegram/Drive
+      # credentials are needed for CI: block_real_network (tests/conftest.py)
+      # prevents any real external call, and the sanitization/compile/demo
+      # checks below need no live credentials either.
+      DATABASE_URL: postgresql://cyber_radar:ci_test_password@localhost:5432/cyber_radar_test
+      TEST_DATABASE_URL: postgresql://cyber_radar:ci_test_password@localhost:5432/cyber_radar_test
+      GEMINI_API_KEY: ci-placeholder-not-a-real-key
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Compile check
+        run: python -m compileall cyber_radar tests tools
+      - name: Public sanitization scan
+        run: python tools/sanitization_scan.py
+      - name: Initialize test database schema
+        run: |
+          python -c "
+          import psycopg
+          with open('db/schema.sql') as f:
+              sql = f.read()
+          with psycopg.connect('${{ env.DATABASE_URL }}', autocommit=True) as conn:
+              conn.execute(sql)
+          "
+      - name: Run test suite
+        run: pytest -q
+      - name: Demo mode (no live calls)
+        run: cyber-radar demo > /dev/null
+      - name: Dependency audit
+        run: |
+          pip install -q pip-audit
+          pip-audit -r requirements.txt || true  # advisory only, does not fail the build
