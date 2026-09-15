@@ -98,7 +98,4 @@ yet included.
 
 ## License
 
-See [LICENSE](LICENSE) — **not yet finalized**, see
-[docs/PUBLIC_RELEASE_ACCEPTANCE.md](docs/PUBLIC_RELEASE_ACCEPTANCE.md)
-for status. Do not treat this repository as under a specific license
-until that file is replaced with a real license text.
+[Apache License 2.0](LICENSE).
