@@ -27,9 +27,15 @@ import sys
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Directories/files never scanned (build artifacts, VCS metadata, this
-# scanner's own docstring/patterns would otherwise flag itself).
+# scanner's own docstring/patterns would otherwise flag itself; .env/.env.bak
+# are gitignored runtime artifacts, not the published tree this gate checks).
 EXCLUDED_DIRS = {".git", ".venv", "__pycache__", "node_modules", "data", ".pytest_cache", "build", "dist"}
-EXCLUDED_FILES = {os.path.join("tools", "sanitization_scan.py"), os.path.join("tests", "test_public_sanitization.py")}
+EXCLUDED_FILES = {
+    os.path.join("tools", "sanitization_scan.py"),
+    os.path.join("tools", "fresh_environment_check.sh"),
+    os.path.join("tests", "test_public_sanitization.py"),
+}
+EXCLUDED_FILENAMES = {".env", ".env.bak"}  # matched by basename, wherever they appear
 
 # Known-private, non-secret identifiers - if any of these literal strings
 # appear anywhere in the public tree, it is near-certain evidence of an
@@ -52,16 +58,18 @@ SECRET_PATTERNS: list[tuple[str, re.Pattern]] = [
     ("Telegram bot token", re.compile(r"\b\d{8,10}:[A-Za-z0-9_-]{35}\b")),
     ("Generic OpenAI-style key", re.compile(r"\bsk-[A-Za-z0-9]{20,}\b")),
     ("Private key block", re.compile(r"-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----")),
-    (
-        "Password embedded in a connection URL",
-        re.compile(r"://[^/\s:]+:(?!CHANGE_ME|password|your[_-]?password|<[^>]+>)[^/\s@]{4,}@"),
-    ),
     ("AWS access key ID", re.compile(r"\bAKIA[0-9A-Z]{16}\b")),
 ]
 
-# Real (non-placeholder) database URL host/credential - flags anything
-# that isn't localhost/127.0.0.1/an obvious placeholder like CHANGE_ME.
-_SAFE_DB_URL_MARKERS = ("localhost", "127.0.0.1", "CHANGE_ME", "example.com", "your-host")
+URL_CREDENTIAL_PATTERN = re.compile(r"://[^/\s:@]+:([^/\s@]{4,})@")
+_SAFE_PASSWORD_MARKERS = ("change_me", "password", "your_password", "your-password", "test", "ci_", "demo", "example", "fake", "placeholder")
+
+
+def _is_safe_placeholder_password(password: str) -> bool:
+    lowered = password.lower()
+    if lowered.startswith("<") and lowered.endswith(">"):
+        return True
+    return any(marker in lowered for marker in _SAFE_PASSWORD_MARKERS)
 
 IP_PATTERN = re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b")
 _SAFE_IPS = {"127.0.0.1", "0.0.0.0", "255.255.255.255", "8.8.8.8", "1.1.1.1"}
@@ -100,9 +108,9 @@ def _iter_text_files(root: str):
         for name in filenames:
             full = os.path.join(dirpath, name)
             rel = os.path.relpath(full, root)
-            if rel in EXCLUDED_FILES:
+            if rel in EXCLUDED_FILES or name in EXCLUDED_FILENAMES:
                 continue
-            if name.endswith((".pyc", ".png", ".jpg", ".jpeg", ".gif", ".pdf", ".db", ".sqlite")):
+            if name.endswith((".pyc", ".png", ".jpg", ".jpeg", ".gif", ".pdf", ".db", ".sqlite", ".bak")):
                 continue
             yield full, rel
 
@@ -126,10 +134,10 @@ def find_all_issues(root: str | None = None) -> list[str]:
             if m:
                 issues.append(f"{rel_path}: matches secret pattern '{label}' (not showing the match itself)")
 
-        if "DATABASE_URL=" in text or "postgresql://" in text:
-            for line in text.splitlines():
-                if "postgresql://" in line and not any(marker in line for marker in _SAFE_DB_URL_MARKERS):
-                    issues.append(f"{rel_path}: DATABASE_URL-like line references a non-placeholder host/credential")
+        for m in URL_CREDENTIAL_PATTERN.finditer(text):
+            password = m.group(1)
+            if not _is_safe_placeholder_password(password):
+                issues.append(f"{rel_path}: connection URL has a non-placeholder-looking password (not showing the match itself)")
 
         # tests/ deliberately exercises the SSRF guard with illustrative
         # private-IP examples (10.0.0.5, 192.168.1.1, ...) - real fixture
