@@ -1,7 +1,7 @@
-# LinkedIn Gönderisi (TR) — Taslak
+# LinkedIn Gönderisi (TR) — Final
 
-*Sadece taslak — henüz yayınlanmadı. Paylaşmadan önce gözden geçirin/
-düzenleyin; birinci ağızdan (maintainer'ın kendi sesiyle) yazıldı.*
+*Paylaşıma hazır — canlı v1.0.0-rc1 release URL'i ile güncellendi.
+Otomatik paylaşılmıyor; maintainer kendisi paylaşacak.*
 
 ---
 
@@ -29,7 +29,8 @@ Self-hosted, açık kaynak (Apache-2.0), ve tüm pipeline `pip install -e .`
 + `cyber-radar demo` kadar yakın — tam bir örnek brifing görmek için
 API anahtarı ya da ağ bağlantısı bile gerekmiyor.
 
-Repo: https://github.com/4rslanismet/cyber-intelligence-radar
+v1.0.0-rc1 yayınlandı: https://github.com/4rslanismet/cyber-intelligence-radar/releases/tag/v1.0.0-rc1
+(repo: https://github.com/4rslanismet/cyber-intelligence-radar)
 
 Geri bildirime gerçekten açığım — özellikle material-update tespit
 mantığı hakkında, ki bu projede en gurur duyduğum kısım.

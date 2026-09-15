@@ -1,7 +1,7 @@
-# LinkedIn Post (EN) — Draft
+# LinkedIn Post (EN) — Final
 
-*Draft only — not published. Review/edit before posting; this is written
-in first person for the maintainer.*
+*Ready to post — updated with the live v1.0.0-rc1 release URL. Not
+auto-posted; the maintainer posts this themselves.*
 
 ---
 
@@ -29,7 +29,8 @@ It's self-hosted, open source (Apache-2.0), and the whole pipeline is
 one `pip install -e .` + `cyber-radar demo` away — no API keys or
 network calls needed to see a full sample digest.
 
-Repo: https://github.com/4rslanismet/cyber-intelligence-radar
+v1.0.0-rc1 is out now: https://github.com/4rslanismet/cyber-intelligence-radar/releases/tag/v1.0.0-rc1
+(repo: https://github.com/4rslanismet/cyber-intelligence-radar)
 
 I'd genuinely like feedback — especially on the material-update
 detection logic, which is the part of this I'm proudest of.
