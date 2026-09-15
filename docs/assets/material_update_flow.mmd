@@ -1,0 +1,6 @@
+flowchart LR
+    A["07:30 — First seen<br/>CVE-2026-DEMO<br/>KEV: No<br/>Exploitation: Unknown<br/>IOC: None"] --> B[Same event<br/>monitored]
+    B --> C["19:30 — Re-checked<br/>CVE-2026-DEMO<br/>KEV: YES<br/>Exploitation: YES<br/>New IOC: 203.0.113.42<br/>Fixed version: 1.2.4"]
+    C --> D{Material<br/>change?}
+    D -->|Yes| E[RESURFACED<br/>🚨 Action Required]
+    D -->|No| F[Not shown again]

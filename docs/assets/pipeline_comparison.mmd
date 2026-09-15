@@ -1,0 +1,18 @@
+flowchart TB
+    subgraph RSS["Traditional RSS Reader"]
+        direction LR
+        r1[Fetch] --> r2[List]
+    end
+
+    subgraph AI["AI News Summarizer"]
+        direction LR
+        a1[Fetch] --> a2[Summarize]
+    end
+
+    subgraph CIR["Cyber Intelligence Radar"]
+        direction LR
+        c1[Collect] --> c2[Normalize] --> c3[Deduplicate] --> c4[Merge Event]
+        c4 --> c5[Detect Material Change] --> c6[Enrich] --> c7[Evaluate Relevance]
+        c7 --> c8[Verify Evidence] --> c9[Prioritize] --> c10[Brief]
+        c10 --> c11[Archive] --> c12[Recover] --> c13[Feed Research Workflows]
+    end

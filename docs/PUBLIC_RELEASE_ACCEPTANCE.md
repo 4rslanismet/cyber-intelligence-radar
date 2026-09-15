@@ -130,7 +130,7 @@ none of them configured.
 ## 20. Local output mode (stdout/Markdown/JSON, deterministic)
 
 **PASS.** `cyber_radar/cli/demo.py` and the `digest` subcommand support
-local rendering without Telegram; `examples/sample_digest.md` is a
+local rendering without Telegram; `examples/output/sample_digest.md` is a
 captured example of this output.
 
 ## 21. Source configuration separation
@@ -356,7 +356,7 @@ plus README/CONTRIBUTING/LICENSE/SECURITY.md at the repo root.
 - [x] No private research profiles — DIAGNOSE/EXPLAIN profiles never copied into this tree
 - [x] Fresh environment setup works — section 34, PASS
 - [x] Doctor passes — runs cleanly with expected WARNs for unconfigured optional services (section 37)
-- [x] Demo mode works — exercised in every fresh-environment run, produces `examples/sample_digest.md`-equivalent output
+- [x] Demo mode works — exercised in every fresh-environment run, produces `examples/output/sample_digest.md`-equivalent output
 - [x] DB initializes from zero — `cyber-radar db init` against an empty DB, verified in fresh-environment run
 - [x] Local digest renders — `cyber-radar demo` / `--local` digest mode
 - [x] Test suite passes — 358 passed (section 39)
@@ -385,7 +385,7 @@ CI and implicitly exercised - no syntax errors in any shipped module),
 public sanitization scan (0 issues, dev tree and fresh copy), secret
 scan (same tool, same result), fresh-environment install (PASS),
 doctor (runs, correct WARN/PASS mix), DB init (from empty), demo (renders
-correctly), sample digest render (`examples/sample_digest.md`), CI-
+correctly), sample digest render (`examples/output/sample_digest.md`), CI-
 equivalent local checks (all green), git diff review (`git log --stat`
 across all 8 commits, contents match the plan in
 `docs/PUBLIC_EXPORT_PLAN.md`). Private production code confirmed

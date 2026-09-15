@@ -24,6 +24,47 @@ Local file (data/reports/*.md) / Telegram
 Optional archive queue (Google Drive, cyber_radar/drive_queue.py)
 ```
 
+The same pipeline, as a diagram (source: `docs/assets/architecture.mmd`):
+
+```mermaid
+flowchart TD
+    A[Sources<br/>RSS/Atom, OpenAlex, arXiv,<br/>Semantic Scholar, Crossref, ...] --> B[Collect]
+    B --> C[Normalize]
+    C --> D[Deduplicate]
+    D --> E[Merge Event]
+    E --> F{Detect<br/>Material Change}
+    F -->|new or materially changed| G[Enrich<br/>LLM analysis]
+    F -->|unchanged repeat| X[Drop - no re-surface]
+    G --> H[Evaluate Relevance]
+    H --> I[Verify Evidence<br/>claims checked against source text]
+    I --> J[Prioritize]
+    J --> K[Brief]
+    K --> L[Local Markdown/JSON]
+    K --> M[Telegram - optional]
+    K --> N[Archive Queue - optional<br/>Google Drive]
+    J --> O[Feed Research Workflows<br/>reading paths, profiles]
+    F -.recovery/backfill.-> D
+```
+
+## Material change detection
+
+Deduplication alone isn't enough — the same real-world event gets
+reported by multiple sources, and a single event's facts change over
+time (a CVE gains a KEV listing, an IOC appears, a fix ships). Rather
+than either (a) treating every re-report as a new item, or (b) treating
+an event as "seen" forever once shown once, this pipeline tracks each
+merged event's structured fields (`cves`, `cisa_kev`,
+`analysis.active_exploitation`, IOCs, `analysis.fixed_versions`, ...)
+across runs and only re-surfaces an already-shown event when one of
+those fields changes materially — see
+`cyber_radar/dedup.py::is_material_news_update` and
+`tests/test_material_update_comparator.py` for the exact, deterministic
+comparison rules, and `docs/COMPARISON.md` /
+`examples/output/sample_material_update.md` for a worked (synthetic)
+example. Fields the comparator deliberately never looks at (title, URL,
+source count, timestamps) can never trigger a re-surface by themselves —
+this is a structural guarantee, not a tuning heuristic.
+
 ## Budget isolation
 
 News analysis and academic-paper analysis draw from **independent**

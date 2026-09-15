@@ -1,0 +1,17 @@
+flowchart TD
+    A[Sources<br/>RSS/Atom, OpenAlex, arXiv,<br/>Semantic Scholar, Crossref, ...] --> B[Collect]
+    B --> C[Normalize]
+    C --> D[Deduplicate]
+    D --> E[Merge Event]
+    E --> F{Detect<br/>Material Change}
+    F -->|new or materially changed| G[Enrich<br/>LLM analysis]
+    F -->|unchanged repeat| X[Drop - no re-surface]
+    G --> H[Evaluate Relevance]
+    H --> I[Verify Evidence<br/>claims checked against source text]
+    I --> J[Prioritize]
+    J --> K[Brief]
+    K --> L[Local Markdown/JSON]
+    K --> M[Telegram - optional]
+    K --> N[Archive Queue - optional<br/>Google Drive]
+    J --> O[Feed Research Workflows<br/>reading paths, profiles]
+    F -.recovery/backfill.-> D
