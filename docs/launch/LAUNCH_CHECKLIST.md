@@ -40,6 +40,7 @@ actions (marked below) require explicit maintainer approval and have
 - [x] `docs/launch/LINKEDIN_EN.md` / `LINKEDIN_TR.md`
 - [x] `docs/launch/SHORT_POST_EN.md` / `SHORT_POST_TR.md`
 - [x] `docs/launch/YOUTUBE.md`
+- [x] `docs/launch/RELEASE_NOTES_v1.0.0-rc1.md` — drafted, tag/release NOT created
 
 ## Manual steps (cannot be done from this environment)
 
