@@ -1,0 +1,73 @@
+# Example research profile: Security Researcher.
+#
+# Copy into profiles/ and add to ACTIVE_RESEARCH_PROFILES to activate.
+# Demonstrates snowball citation expansion (finds papers that cite/are
+# cited by your seed set) and a fuller digest_bridge schema. See
+# profiles/examples/soc_analyst.yaml for the shorter, minimal example.
+id: security_researcher
+title: "Security Researcher"
+mode: research
+snowball: true
+snowball_seed_limit: 10
+per_query_max_results: 25
+
+research_questions:
+  - "What recent academic work advances applied, practitioner-relevant security research (as opposed to purely theoretical cryptography or unrelated CS subfields)?"
+
+concept_groups:
+  applied_security:
+    - applied cybersecurity research
+    - security evaluation methodology
+    - empirical security study
+  emerging_threats:
+    - adversarial machine learning security
+    - LLM security research
+    - AI-assisted attack detection
+  measurement:
+    - security metrics
+    - security benchmark dataset
+    - reproducible security research
+
+queries:
+  - [applied_security, measurement]
+  - [emerging_threats, applied_security]
+
+extraction_schema:
+  type: object
+  description: >
+    Fields specific to the Security Researcher profile. Scores are 0 if
+    the text gives no real basis for a higher one.
+  required:
+    - relevance_score
+    - why_relevant
+  properties:
+    relevance_score:
+      type: [number, "null"]
+      minimum: 0
+      maximum: 10
+      description: "How relevant is this to applied, practitioner-facing security research?"
+    why_relevant:
+      type: [string, "null"]
+      description: "One or two sentences: why is this paper worth a researcher's attention?"
+    relevance_dimensions:
+      type: object
+      properties:
+        methodology_rigor: {type: number, minimum: 0, maximum: 10}
+        reproducibility: {type: number, minimum: 0, maximum: 10}
+        novelty: {type: number, minimum: 0, maximum: 10}
+        practical_applicability: {type: number, minimum: 0, maximum: 10}
+    digest_bridge:
+      type: [object, "null"]
+      properties:
+        methodology_summary:
+          type: [string, "null"]
+          description: "One-sentence summary of the paper's methodology."
+        dataset_or_benchmark:
+          type: [string, "null"]
+          description: "Named dataset or benchmark used, if any."
+        research_gap:
+          type: [string, "null"]
+          description: "What open question or limitation does this paper point at?"
+        follow_up_idea:
+          type: [string, "null"]
+          description: "A concrete follow-up research idea this paper suggests."

@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cyber-intelligence-radar"
+version = "0.1.0"
+description = "Automated Cyber Threat Intelligence & Research Platform"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "TBD - see docs/PUBLIC_RELEASE_ACCEPTANCE.md" }
+dependencies = [
+    "httpx>=0.27",
+    "feedparser>=6.0.11",
+    "psycopg[binary]>=3.1",
+    "python-dotenv>=1.0",
+    "google-genai>=2.3",
+    "tenacity>=8.2",
+    "pymupdf>=1.24",
+    "pyyaml>=6.0",
+    "jsonschema>=4.20",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4", "pytest-cov"]
+
+[project.scripts]
+cyber-radar = "cyber_radar.cli.main:main"
+
+[tool.setuptools.packages.find]
+include = ["cyber_radar*"]

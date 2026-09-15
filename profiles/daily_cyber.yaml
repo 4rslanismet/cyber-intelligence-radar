@@ -1,0 +1,8 @@
+# Default daily radar profile - deliberately does NOT define
+# concept_groups/queries: those are generated on every run from the live
+# KEYWORDS setting in your .env (see cyber_radar/research/profiles.py
+# load_active_profiles()). This is the profile that runs out of the box.
+id: daily_cyber
+title: Daily Cybersecurity Radar
+mode: daily
+snowball: false

@@ -1,0 +1,23 @@
+# Example research profile: CTI (Cyber Threat Intelligence) Analyst.
+#
+# Minimal example - no extraction_schema, so this profile only steers
+# academic source/keyword collection (concept_groups/queries), without a
+# dedicated digest section. Copy into profiles/ and add to
+# ACTIVE_RESEARCH_PROFILES to activate.
+id: cti_analyst
+title: "Threat Intelligence Analyst"
+mode: research
+snowball: false
+per_query_max_results: 25
+
+concept_groups:
+  threat_intel:
+    - cyber threat intelligence
+    - threat actor attribution
+    - IOC extraction
+  malware_intel:
+    - malware family classification
+    - threat campaign analysis
+
+queries:
+  - [threat_intel, malware_intel]

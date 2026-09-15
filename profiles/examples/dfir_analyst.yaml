@@ -1,0 +1,23 @@
+# Example research profile: DFIR (Digital Forensics & Incident Response)
+# Analyst.
+#
+# Minimal example - no extraction_schema (collection-only). Copy into
+# profiles/ and add to ACTIVE_RESEARCH_PROFILES to activate.
+id: dfir_analyst
+title: "DFIR Analyst"
+mode: research
+snowball: false
+per_query_max_results: 25
+
+concept_groups:
+  forensics:
+    - digital forensics
+    - memory forensics
+    - disk forensics
+  incident_response:
+    - incident response methodology
+    - forensic timeline analysis
+    - malware forensic analysis
+
+queries:
+  - [forensics, incident_response]

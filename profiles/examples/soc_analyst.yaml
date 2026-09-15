@@ -1,0 +1,89 @@
+# Example research profile: SOC Analyst.
+#
+# Copy this file into profiles/ (one directory up) to activate it, then
+# add its id to ACTIVE_RESEARCH_PROFILES in your .env, e.g.:
+#   ACTIVE_RESEARCH_PROFILES=daily_cyber,soc_analyst
+#
+# This profile demonstrates the full "Research Profile A/B" digest-bridge
+# mechanism (see docs/PROFILES.md): if you also set
+#   RESEARCH_PROFILE_A_ID=soc_analyst
+# then every matched paper gets its own scored "why is this relevant to
+# me" section in the digest, using the fields defined under
+# extraction_schema.properties.digest_bridge below. You can rename/add/
+# remove those fields freely - the renderer is fully generic, it just
+# shows whatever your schema defines with humanized field names as
+# labels. Nothing here needs a code change to work.
+id: soc_analyst
+title: "SOC Analyst"
+mode: research
+snowball: false
+per_query_max_results: 25
+
+research_questions:
+  - "What academic work is directly applicable to day-to-day SOC alert triage, detection engineering, and log correlation?"
+
+concept_groups:
+  soc_operations:
+    - security operations center
+    - SOC alert triage
+    - alert fatigue
+    - log correlation
+  detection_engineering:
+    - detection engineering
+    - detection rule development
+    - SIEM correlation rules
+    - Sigma rules
+  automation:
+    - SOAR
+    - security automation
+    - alert prioritization machine learning
+
+queries:
+  - [soc_operations, detection_engineering]
+  - [detection_engineering, automation]
+
+# Optional: only needed if you want this profile's own digest section
+# (RESEARCH_PROFILE_A_ID/_B_ID). Remove entirely if you just want the
+# profile to steer source/relevance selection without a dedicated
+# digest section.
+extraction_schema:
+  type: object
+  description: >
+    Fields specific to the SOC Analyst profile. Scores are 0 if the
+    text gives no real basis for a higher one - never guess a high
+    score without textual support.
+  required:
+    - relevance_score
+    - why_relevant
+  properties:
+    relevance_score:
+      type: [number, "null"]
+      minimum: 0
+      maximum: 10
+      description: "How relevant is this paper to day-to-day SOC operations work?"
+    why_relevant:
+      type: [string, "null"]
+      description: "One or two sentences: why does this matter for a SOC analyst?"
+    relevance_dimensions:
+      type: object
+      description: "Each 0-10 (0 if the text gives no basis for a higher score)."
+      properties:
+        alert_triage_relevance: {type: number, minimum: 0, maximum: 10}
+        detection_engineering_relevance: {type: number, minimum: 0, maximum: 10}
+        automation_relevance: {type: number, minimum: 0, maximum: 10}
+    digest_bridge:
+      type: [object, "null"]
+      description: >
+        Free-text answers shown in the digest for this profile. Leave a
+        field null if the text gives no real basis for an answer -
+        never fabricate.
+      properties:
+        practical_takeaway:
+          type: [string, "null"]
+          description: "What could a SOC analyst try or change tomorrow based on this?"
+        tooling_mentioned:
+          type: [string, "null"]
+          description: "Any concrete tool/platform mentioned (e.g. Splunk, Sigma, a specific SIEM)?"
+        research_gap:
+          type: [string, "null"]
+          description: "What open question does this paper point at?"
